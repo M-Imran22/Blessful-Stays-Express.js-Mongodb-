@@ -2,19 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Listing = require("../models/listing.js");
 const wrapAsync = require("../util/wrapAsync.js");
-const ExpressError = require("../util/ExpressError.js");
-const { listingSchema } = require("../Schema.js");
-const { isLoggedIn } = require("../middlewear/isLoggedIn.js");
-
-// validation for listing
-const validationListing = (req, res, next) => {
-  const { error } = listingSchema.validate(req.body);
-  if (error) {
-    throw new ExpressError(400, error);
-  } else {
-    next();
-  }
-};
+const { isLoggedIn, isOwner, validationListing } = require("../middlewears.js");
 
 // index route
 router.get(
@@ -36,13 +24,12 @@ router.get(
   wrapAsync(async (req, res) => {
     let id = req.params.id;
     const listing = await Listing.findById(id)
-      .populate("reviews")
+      .populate({ path: "reviews", populate: { path: "author" } })
       .populate("owner");
     if (!listing) {
       req.flash("error", "Listing you requested does not exist!");
       res.redirect("/listings");
     }
-    console.log(listing);
     res.render("listings/show.ejs", { listing });
   })
 );
@@ -65,6 +52,7 @@ router.post(
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isOwner,
   wrapAsync(async (req, res) => {
     let id = req.params.id;
     const listing = await Listing.findById(id);
@@ -80,6 +68,7 @@ router.get(
 router.put(
   "/:id",
   isLoggedIn,
+  isOwner,
   wrapAsync(async (req, res) => {
     let id = req.params.id;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
@@ -92,6 +81,7 @@ router.put(
 router.delete(
   "/:id",
   isLoggedIn,
+  isOwner,
   wrapAsync(async (req, res) => {
     let id = req.params.id;
     await Listing.findByIdAndDelete(id);

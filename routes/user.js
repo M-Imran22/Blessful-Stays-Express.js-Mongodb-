@@ -3,7 +3,7 @@ const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../util/wrapAsync.js");
 const user = require("../models/user.js");
 const passport = require("passport");
-const { saveRedirectUrl } = require("../middlewear/isLoggedIn.js");
+const { saveRedirectUrl } = require("../middlewears.js");
 
 router.get("/signup", (req, res) => {
   res.render("user/signup.ejs");
