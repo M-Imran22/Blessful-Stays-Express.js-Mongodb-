@@ -1,6 +1,31 @@
+<style>
+  .search-btn{
+    background-color: #fe424d;
+    color: #fff;
+    border-radius: 25px;
+    padding: 0 3rem;
+    /* display: inline; */
+  }
+
+  .search-btn:hover{
+    background-color: #fe424d;
+    color: #fff;
+  }
+
+  .fa-solid{
+    display: inline;
+    margin-right: .5rem;
+  }
+
+  .search-inpt{
+    border-radius: 25px;
+    padding: .5rem 3rem;
+  }
+</style>
+
 <nav class="navbar navbar-expand-md bg-body-light sticky-top border-bottom">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
     <button
       class="navbar-toggler"
       type="button"
@@ -11,16 +36,21 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/listings">All Listings</a>
-        <a class="nav-link" href="/listings/new">Add New Listing</a>
+        <a class="nav-link" href="/listings">Explor</a>
       </div>
       <div class="navbar-nav ms-auto">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2 search-inpt" type="search" placeholder="Search Destination">
+          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
+      </div>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new">Add New Listing</a>
         <% if (!currentUser) { %>
-        <a class="nav-link" href="/signup">Sign up</a>
-        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/signup"><b>Sign up</b></a>
+        <a class="nav-link" href="/login"><b>Login</b></a>
         <%} %> <% if (currentUser) {%>
-        <a class="nav-link" href="/logout">Logout</a>
+        <a class="nav-link" href="/logout"><b></b>Logout</b></a>
         <%}%>
       </div>
     </div>

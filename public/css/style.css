@@ -104,3 +104,9 @@ body {
 .delete-btn {
   margin-left: 2rem;
 }
+
+/* map */
+#map {
+  width: 100vh;
+  height: 300px;
+}

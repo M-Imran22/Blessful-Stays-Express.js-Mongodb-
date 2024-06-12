@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -67,9 +71,9 @@ app.use("/listings", listingsRoute);
 app.use("/listings/:id/reviews", reviewsRoute);
 app.use("/", userRoute);
 
-app.all("*", (req, res, next) => {
-  next(new ExpressError(404, "Page Not Found!"));
-});
+// app.all("*", (req, res, next) => {
+//   next(new ExpressError(404, "Page Not Found!"));
+// });
 
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Somthing went wrong!" } = err;
